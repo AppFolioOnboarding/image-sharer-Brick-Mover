@@ -2,3 +2,9 @@
 <p>World</p>
 
 <%= link_to "Submit image url", new_image_url, method: :get %>
+
+<h2>Your most recent image</h2>
+<%= stylesheet_link_tag 'index' %>
+<% if not @image.nil? %>
+  <%= image_tag @image.link %>
+<% end %>

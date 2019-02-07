@@ -20,7 +20,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create' do
-    params = { image: { link: 'www.example.gif' } }
+    params = { image: { link: 'www.example.gif' } }v
     assert_difference 'Image.count' do
       post images_url params
     end
