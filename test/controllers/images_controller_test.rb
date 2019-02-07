@@ -39,10 +39,27 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show' do
-    created_image = Image.create!(link: 'http://www.example.png')
+    created_image = Image.create!(link: 'http://www.example.com/1.png')
     get image_url(created_image.id)
     assert_response :ok
-    assert_select 'body img[src="http://www.example.png"]'
+    assert_select 'body img[src="http://www.example.com/1.png"]'
     assert_select 'body h1', 'Show something'
+  end
+
+  test 'index displays the most recent images' do
+    image1 = Image.create!(link: 'http://www.example.com/1.png')
+    sleep(1)
+    image2 = Image.create!(link: 'http://www.example.com/2.png')
+    get images_url
+    assert_response :ok
+    displayed_images = assert_select 'body img[created_at]'
+    assert_equal image2.created_at.utc.to_i, Time.zone.parse(displayed_images[0].attr('created_at')).getutc.to_i
+    assert_equal image1.created_at.utc.to_i, Time.zone.parse(displayed_images[1].attr('created_at')).getutc.to_i
+  end
+
+  test 'database is empty' do
+    get images_url
+    assert_response :ok
+    assert_select 'body img[src="http://www.example.com/1.png"]', false, 'There should be no image here'
   end
 end

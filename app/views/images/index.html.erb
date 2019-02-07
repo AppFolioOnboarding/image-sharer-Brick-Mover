@@ -5,6 +5,8 @@
 
 <h2>Your most recent image</h2>
 <%= stylesheet_link_tag 'index' %>
-<% if not @image.nil? %>
-  <%= image_tag @image.link %>
+<% unless @recent_images.nil? %>
+  <% @recent_images.each do |image|  %>
+    <%= image_tag image.link, created_at: image.created_at %> <br />
+  <% end %>
 <% end %>

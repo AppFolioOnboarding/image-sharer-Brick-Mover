@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   def index
-    @image = Image.last
+    @recent_images = Image.order('created_at DESC')
   end
 
   def new
@@ -11,7 +11,6 @@ class ImagesController < ApplicationController
     @image = Image.new(image_params)
     if @image.save
       redirect_to @image
-
     else
       render :new
     end
