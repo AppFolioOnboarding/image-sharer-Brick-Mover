@@ -5,3 +5,25 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Image.create!([
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' },
+  { link: 'https://thumbs.gfycat.com/GoldenAnxiousKagu-size_restricted.gif' },
+  { link: 'https://img.rankedboost.com/wp-content/uploads/2018/10/Pokemon-Lets-Go-mega-evolutions.jpg' },
+  { link: 'https://www.zeldaspalace.com/images/ss/arts/link_05.jpg' }
+])
