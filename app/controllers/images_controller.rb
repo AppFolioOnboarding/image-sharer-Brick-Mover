@@ -1,6 +1,10 @@
 class ImagesController < ApplicationController
   def index
     @recent_images = Image.order('created_at DESC')
+    if params[:selected_tag].present?
+      @recent_images = @recent_images.tagged_with([params[:selected_tag]], any: true)
+    end
+    @recent_images
   end
 
   def new

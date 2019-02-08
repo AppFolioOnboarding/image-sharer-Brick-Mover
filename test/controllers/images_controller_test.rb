@@ -75,12 +75,30 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
   test 'test image tags in index' do
     Image.create!(link: 'http://www.example.com/1.png', tag_list: 'tag1.1, tag2.1')
-    Image.create!(link: 'http://www.example.com/1.png', tag_list: 'tag2.1, tag2.2')
+    Image.create!(link: 'http://www.example.com/2.png', tag_list: 'tag2.1, tag2.2')
 
     get images_url
 
     assert_response :ok
-    puts assert_select 'body span', text: 'tag1.1, tag2.1'
-    puts assert_select 'body span', text: 'tag2.1, tag2.2'
+
+    assert_select 'a[href=?]', images_url('selected_tag': 'tag1.1'), text: 'tag1.1,'
+    assert_select 'a[href=?]', images_url('selected_tag': 'tag2.1'), text: 'tag2.1'
+    assert_select 'a[href=?]', images_url('selected_tag': 'tag2.1'), text: 'tag2.1,'
+    assert_select 'a[href=?]', images_url('selected_tag': 'tag2.2'), text: 'tag2.2'
+  end
+
+  test 'test filtering image tags' do
+    Image.create!(link: 'http://www.example.com/1.png', tag_list: 'x, y')
+    Image.create!(link: 'http://www.example.com/2.png', tag_list: 'x, z')
+    Image.create!(link: 'http://www.example.com/3.png', tag_list: 's, t')
+
+    get images_url('selected_tag': 'x')
+
+    assert_response :ok
+    assert_select 'a[href=?]', images_url('selected_tag': 'x'), text: 'x,'
+    assert_select 'a[href=?]', images_url('selected_tag': 'z'), text: 'z'
+    assert_select 'a[href=?]', images_url('selected_tag': 'y'), text: 'y'
+    assert_select 'a[href=?]', images_url('selected_tag': 't'), text: 't', count: 0
+    assert_select 'a[href=?]', images_url('selected_tag': 's'), text: 's', count: 0
   end
 end
