@@ -101,4 +101,14 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', images_url('selected_tag': 't'), text: 't', count: 0
     assert_select 'a[href=?]', images_url('selected_tag': 's'), text: 's', count: 0
   end
+
+  test 'delete image' do
+    created_image = Image.create!(link: 'http://www.example.com/1.png', tag_list: 'x, y')
+
+    assert_difference 'Image.count', -1 do
+      delete image_url(created_image.id)
+    end
+
+    assert_response :found
+  end
 end
