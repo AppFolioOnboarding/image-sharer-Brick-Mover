@@ -12,6 +12,10 @@
       <%= link_to t != image.tags.last ? "#{t.name}," : t.name, images_url(selected_tag: t.name) %>
     <% end %>
   </span>
+  <div>
+    <%= link_to 'Delete', image_path(image.id), method: :delete,
+                data: { confirm: 'Are you sure?' } %>
+  </div>
   <br />
   <br />
 <% end %>
