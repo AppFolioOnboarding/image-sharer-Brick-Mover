@@ -7,7 +7,11 @@
 
 <% @recent_images.each do |image|  %>
   <%= image_tag image.link %>
-  <span> <%= image.tag_list %> </span>
+  <span>
+    <% image.tags.each do |t| %>
+      <%= link_to t != image.tags.last ? "#{t.name}," : t.name, images_url(selected_tag: t.name) %>
+    <% end %>
+  </span>
   <br />
   <br />
 <% end %>
