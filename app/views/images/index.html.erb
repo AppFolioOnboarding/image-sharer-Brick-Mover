@@ -3,11 +3,8 @@
 
 <%= link_to "Submit image url", new_image_url %>
 
-<h2>Your most recent images</h2>
+<h2>Your most recent image</h2>
 
 <% @recent_images.each do |image|  %>
-  <%= image_tag image.link %>
-  <span> <%= image.tag_list %> </span>
-  <br />
-  <br />
+  <%= image_tag image.link %> <br />
 <% end %>

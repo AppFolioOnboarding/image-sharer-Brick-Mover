@@ -11,12 +11,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'a[href="http://www.example.com/images/new"]'
   end
 
-  test 'new image form has link and tags input' do
+  test 'new image' do
     get new_image_url
     assert_response :ok
     assert_select 'body h1', 'New Image'
     assert_select '#image_link'
-    assert_select '#image_tag_list'
     assert_select '.btn', count: 1, value: 'Create Image'
   end
 
@@ -64,23 +63,5 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :ok
     assert_select 'body img[src="http://www.example.com/1.png"]', false, 'There should be no image here'
-  end
-
-  test 'test image tags in show' do
-    created_image = Image.create!(link: 'http://www.example.com/1.png', tag_list: 'tag1, tag2')
-    get image_url(created_image.id)
-    assert_response :ok
-    assert_select 'body span', 'Tags: tag1, tag2'
-  end
-
-  test 'test image tags in index' do
-    Image.create!(link: 'http://www.example.com/1.png', tag_list: 'tag1.1, tag2.1')
-    Image.create!(link: 'http://www.example.com/1.png', tag_list: 'tag2.1, tag2.2')
-
-    get images_url
-
-    assert_response :ok
-    puts assert_select 'body span', text: 'tag1.1, tag2.1'
-    puts assert_select 'body span', text: 'tag2.1, tag2.2'
   end
 end
