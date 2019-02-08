@@ -2,5 +2,11 @@
 
 <%= stylesheet_link_tag 'show' %>
 <%= image_tag @image.link %>
+<% @image.tag_list.each do |tag| %>
+  <tr>
+    <td> <%= tag %> </td>
+  </tr>
+<% end %>
 
+<br/>
 <%= link_to "Go back to main page", images_path %>

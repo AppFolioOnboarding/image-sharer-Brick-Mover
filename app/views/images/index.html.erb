@@ -7,6 +7,12 @@
 <%= stylesheet_link_tag 'index' %>
 <% unless @recent_images.nil? %>
   <% @recent_images.each do |image|  %>
-    <%= image_tag image.link, created_at: image.created_at %> <br />
+    <%= image_tag image.link, created_at: image.created_at %>
+    <% image.tag_list.each do |tag| %>
+      <tr>
+        <td> <%= tag %> </td>
+      </tr>
+    <% end %>
+    <br />
   <% end %>
 <% end %>
