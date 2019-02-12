@@ -3,14 +3,15 @@ import 'jsdom-global/register';
 import React from 'react';
 import { shallow, configure } from 'enzyme';
 import { expect } from 'chai';
-import Footer from '../../components/Footer';
 import Adapter from 'enzyme-adapter-react-16';
-import FeedbackForm from "../../components/FeedbackForm";
+import FeedbackForm from '../../components/FeedbackForm';
+import feedbackStore from '../../stores/FeedbackStore';
+
 configure({ adapter: new Adapter() });
 
 describe('<FeedbackForm />', () => {
   it('feedback form has name&comments', () => {
-    const wrapper = shallow(<FeedbackForm />);
+    const wrapper = shallow(<FeedbackForm feedbackStore={feedbackStore}/>);
     let name = wrapper.find('#name');
     let comments = wrapper.find('#comments');
 
