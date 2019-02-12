@@ -1,5 +1,6 @@
-export class FeedbackStore {
-  /* Implement your feedback store*/
+class FeedbackStore {
 }
 
-export default FeedbackStore;
+const feedbackStore = new FeedbackStore();
+
+export default feedbackStore;
