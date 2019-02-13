@@ -15,7 +15,7 @@ describe('<App />', () => {
     const stores = {
       feedbackStore: {}
     };
-    const wrapper = shallow(<App.wrappedComponent stores={stores} />);
+    const wrapper = shallow(<App stores={stores} />);
     const header = wrapper.find(Header);
     const footer = wrapper.find(Footer);
 
