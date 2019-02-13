@@ -7,6 +7,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import FeedbackForm from '../../components/FeedbackForm';
 import { FeedbackStore } from '../../stores/FeedbackStore';
 import { Label, Button } from 'reactstrap';
+import postFeedbackService from "../../services/PostFeedbackService";
+import sinon from 'sinon';
 
 configure({ adapter: new Adapter() });
 
@@ -54,5 +56,17 @@ describe('<FeedbackForm />', () => {
 
     expect(name.prop('value')).to.equal('Jane Doe');
     expect(comments.prop('value')).to.equal('sleep code eat');
+  });
+
+  it.only('submit button works', () => {
+    const button = wrapper.find(Button);
+    let serviceStub = sinon.stub(postFeedbackService, 'sendFeedback').returns('success');
+    let event = {preventDefault: () => {}};
+    let preventDefaultSpy = sinon.spy(event, 'preventDefault');
+
+    button.prop('onClick')(event);
+
+    expect(serviceStub.calledOnceWith('', '')).to.equal(true);
+    expect(preventDefaultSpy.calledOnce).to.equal(true);
   });
 });
