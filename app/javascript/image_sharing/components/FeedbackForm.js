@@ -31,6 +31,8 @@ class FeedbackForm extends Component {
       this.props.feedbackStore.flashMessage = err.message;
       this.props.feedbackStore.flashColor = "danger";
     }
+    this.props.feedbackStore.name = '';
+    this.props.feedbackStore.comments = '';
   };
 
   render() {

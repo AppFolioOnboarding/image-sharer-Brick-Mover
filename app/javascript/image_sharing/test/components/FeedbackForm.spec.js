@@ -96,4 +96,17 @@ describe('<FeedbackForm />', () => {
     expect(feedbackStore.flashMessage).to.equal('Network failure');
     expect(feedbackStore.flashColor).to.equal('danger');
   });
+
+  it('feedback form reset to empty after submission', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .resolves({message: 'Thanks for your feedback!'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.name).to.equal('');
+    expect(feedbackStore.comments).to.equal('');
+  });
 });
