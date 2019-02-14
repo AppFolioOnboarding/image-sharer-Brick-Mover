@@ -3,11 +3,13 @@ import Header from './Header';
 import Footer from "./Footer";
 import FeedbackForm from './FeedbackForm'
 import feedbackStore from '../stores/FeedbackStore'
+import FlashMessages from "./FlashMessages";
 
 class App extends Component {
   render() {
     return (
       <div>
+        <FlashMessages feedbackStore={feedbackStore}/>
         <Header title={'Tell us what you think'} />
         <FeedbackForm feedbackStore={feedbackStore} />
         <Footer copyright={'Copyright: Appfolio Inc. Onboarding'}/>

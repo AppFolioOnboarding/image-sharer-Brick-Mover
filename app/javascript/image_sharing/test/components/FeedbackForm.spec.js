@@ -58,9 +58,10 @@ describe('<FeedbackForm />', () => {
     expect(comments.prop('value')).to.equal('sleep code eat');
   });
 
-  it.only('submit button works', () => {
+  it('submit button works', () => {
     const button = wrapper.find(Button);
-    let serviceStub = sinon.stub(postFeedbackService, 'sendFeedback').returns('success');
+    let serviceStub = sinon.stub(postFeedbackService, 'sendFeedback')
+      .returns({message: 'Thanks for your feedback!'});
     let event = {preventDefault: () => {}};
     let preventDefaultSpy = sinon.spy(event, 'preventDefault');
 
@@ -68,5 +69,31 @@ describe('<FeedbackForm />', () => {
 
     expect(serviceStub.calledOnceWith('', '')).to.equal(true);
     expect(preventDefaultSpy.calledOnce).to.equal(true);
+  });
+
+  it('Flash message after submission succeeds', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .resolves({message: 'Thanks for your feedback!'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.flashMessage).to.equal('Thanks for your feedback!');
+    expect(feedbackStore.flashColor).to.equal('success');
+  });
+
+  it('Flash message after submission fails', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .rejects({message: 'Network failure'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.flashMessage).to.equal('Network failure');
+    expect(feedbackStore.flashColor).to.equal('danger');
   });
 });

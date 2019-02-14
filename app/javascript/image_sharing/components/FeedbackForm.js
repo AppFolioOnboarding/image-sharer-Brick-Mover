@@ -17,10 +17,20 @@ class FeedbackForm extends Component {
     this.props.feedbackStore.comments = event.target.value;
   };
 
+  @action
   onSubmit = async (event) => {
     event.preventDefault();
-    await postFeedbackService.sendFeedback(this.props.feedbackStore.name,
-      this.props.feedbackStore.comments);
+    try {
+      const sendResult = await postFeedbackService.sendFeedback(this.props.feedbackStore.name,
+        this.props.feedbackStore.comments);
+      if (sendResult.message === "Thanks for your feedback!") {
+        this.props.feedbackStore.flashMessage = sendResult.message;
+        this.props.feedbackStore.flashColor = "success";
+      }
+    } catch (err) {
+      this.props.feedbackStore.flashMessage = err.message;
+      this.props.feedbackStore.flashColor = "danger";
+    }
   };
 
   render() {
