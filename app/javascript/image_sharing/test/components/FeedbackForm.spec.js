@@ -7,6 +7,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import FeedbackForm from '../../components/FeedbackForm';
 import { FeedbackStore } from '../../stores/FeedbackStore';
 import { Label, Button } from 'reactstrap';
+import postFeedbackService from "../../services/PostFeedbackService";
+import sinon from 'sinon';
 
 configure({ adapter: new Adapter() });
 
@@ -54,5 +56,57 @@ describe('<FeedbackForm />', () => {
 
     expect(name.prop('value')).to.equal('Jane Doe');
     expect(comments.prop('value')).to.equal('sleep code eat');
+  });
+
+  it('submit button works', () => {
+    const button = wrapper.find(Button);
+    let serviceStub = sinon.stub(postFeedbackService, 'sendFeedback')
+      .returns({message: 'Thanks for your feedback!'});
+    let event = {preventDefault: () => {}};
+    let preventDefaultSpy = sinon.spy(event, 'preventDefault');
+
+    button.prop('onClick')(event);
+
+    expect(serviceStub.calledOnceWith('', '')).to.equal(true);
+    expect(preventDefaultSpy.calledOnce).to.equal(true);
+  });
+
+  it('Flash message after submission succeeds', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .resolves({message: 'Thanks for your feedback!'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.flashMessage).to.equal('Thanks for your feedback!');
+    expect(feedbackStore.flashColor).to.equal('success');
+  });
+
+  it('Flash message after submission fails', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .rejects({message: 'Network failure'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.flashMessage).to.equal('Network failure');
+    expect(feedbackStore.flashColor).to.equal('danger');
+  });
+
+  it('feedback form reset to empty after submission', async () => {
+    const button = wrapper.find(Button);
+    sinon.stub(postFeedbackService, 'sendFeedback')
+      .resolves({message: 'Thanks for your feedback!'});
+
+    await button.prop('onClick')({
+      preventDefault: () => {}
+    });
+
+    expect(feedbackStore.name).to.equal('');
+    expect(feedbackStore.comments).to.equal('');
   });
 });

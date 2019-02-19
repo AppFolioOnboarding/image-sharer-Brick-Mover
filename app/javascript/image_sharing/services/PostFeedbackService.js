@@ -1,7 +1,10 @@
 import { post } from "../utils/helper";
 
 export class PostFeedbackService {
-  /* Implement your service */
+  sendFeedback(name, comments) {
+    return post('/api/feedbacks', {name: name, comments: comments});
+  }
 }
 
-export default PostFeedbackService;
+const postFeedbackService = new PostFeedbackService();
+export default postFeedbackService;
